@@ -10,19 +10,25 @@ class Actor:
         self.lost = False
         self.name = ""
 
+    def win_case(self):
+        print(f"{self.name} hit blackjack!")
+        self.hit_available = False # Prevents drawing a card after win
+        self.win = True
+        self.display_hand()
+
+
+    def loss_case(self):
+        print(f"{self.name} busted!")
+        self.lost = True
+        self.hit_available = False  # Prevents drawing a card after loss
+
 
     # Checks to see if the actor has won, lost, or can hit again
     def status_check(self):
         if self.score.get_score() > 21:
-            print("Bust!")
-            self.lost = True
-            self.hit_available = False  # Prevents drawing a card after loss
+            self.loss_case()
         elif self.score.get_score() == 21:
-            print("Blackjack!")
-            self.hit_available = False # Prevents drawing a card after win
-            self.win = True
-            for card in self.cards_in_hand:
-                print(card, end = " ")
+            self.win_case()
         else:
             self.hit_available = True
     
@@ -32,15 +38,18 @@ class Actor:
         for i in range(2):  # Draws two cards
             self.cards_in_hand.append(card_list.pop())
         self.status_check()
-        self.display_hand()
+        if not self.win:
+            self.display_hand()
+        else:
+            self.win_case
 
 
     # Gives the ability to draw another card, before checking status of hand
     def hit(self, card_list):
         self.cards_in_hand.append(card_list.pop())
-        self.status_check()
         if not self.win:
             self.display_hand()
+        self.status_check()
 
 
     # We're basically just saying "We're done! This is the hand I'm playing"

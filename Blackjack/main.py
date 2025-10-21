@@ -34,9 +34,9 @@ while player.hit_available:
 if not (player.win or player.lost):
     house.house_behavior(player.final_score, card_list)
 
-if player.final_score > house.final_score or player.win or house.lost:
+if (player.final_score > house.final_score or player.win or house.lost) and not (player.lost or house.lost):
     print(f"You win with a score of {player.final_score} to the house's {house.final_score}")
-elif player.final_score < house.final_score or house.win:
+elif (player.final_score < house.final_score or house.win) and not (player.lost or house.lost):
     print(f"House wins with a score of {house.final_score} to your {player.final_score}")        
-else:
+elif player.final_score == house.final_score and not (player.lost or house.lost):
     print(f"You and the house are tied at {player.final_score} points each")

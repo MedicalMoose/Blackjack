@@ -1,4 +1,5 @@
 from actor import Actor
+from time import sleep
 
 class House(Actor):
     def __init__(self):
@@ -19,8 +20,12 @@ class House(Actor):
     def house_behavior(self, player_score, card_list):
         self.display_hand()
         house_score = self.score.get_score()
-        while house_score < player_score and house_score < 21:
+        while house_score < player_score and house_score < 17 and self.hit_available:
+            sleep(1)
             self.hit(card_list)
             house_score = self.score.get_score()
-        if house_score >= player_score and house_score <= 21:
+        self.final_score = house_score
+        if house_score >= player_score:
             self.stand()
+        elif house_score > 21:
+            self.loss_case()
