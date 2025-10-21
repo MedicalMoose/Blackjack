@@ -4,5 +4,6 @@ class Cards:
         self.rank = rank
         self.score = score
 
+    # String representation of the card
     def __str__(self):
         return f"{self.rank} of {self.suit}"
