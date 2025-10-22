@@ -6,6 +6,7 @@ class Player(Actor):
         super().__init__()
         self.name = "Player"  # Sets the name to Player
 
+
     def player_response(self):
         response = input("Hit (h) or Stand (s)?").lower()
         while response not in ["h", "s"]:

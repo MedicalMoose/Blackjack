@@ -32,4 +32,3 @@ class Scoring:
             self.score_totalling(card)
         # Returns the final code, considering the effect of aces
         return self.ace_handling(self.total_score, self.no_aces)
-

@@ -29,3 +29,4 @@ class House(Actor):
             self.stand()
         elif house_score > 21:
             self.loss_case()
+            

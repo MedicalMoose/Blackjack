@@ -3,14 +3,13 @@ from cards import Cards
 from house import House
 from player import Player
 from scoring import Scoring
+from time import sleep
 from random import shuffle
 
 # Setting up our variables, arrays, and objects
 card_list = []
 suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
 rank_score = [["2", 2], ["3", 3], ["4", 4], ["5", 5], ["6", 6], ["7", 7], ["8", 8], ["9", 9], ["10", 10], ["Jack", 10], ["Queen", 10], ["King", 10], ["Ace", "Ace"], ]
-house = House()
-player = Player()
 
 # Creating our cards
 for suit in suits:
@@ -18,6 +17,7 @@ for suit in suits:
         card_list.append(Cards(suit, rank[0], rank[1]))
 
 # Shuffling the deck
+default_deck = card_list.copy()
 shuffle(card_list)
 
 
@@ -26,17 +26,41 @@ def opening_deal():
     house.opening_draw(card_list)
     player.opening_draw(card_list)
 
-opening_deal()
+def player_win():
+    return (player.final_score > house.final_score) and not (player.lost or house.lost)
 
-while player.hit_available:
-    player.offer_hit(card_list)   
 
-if not (player.win or player.lost):
-    house.house_behavior(player.final_score, card_list)
+def house_win():
+    return (player.final_score < house.final_score) and not (player.lost or house.lost)
 
-if (player.final_score > house.final_score or player.win or house.lost) and not (player.lost or house.lost):
-    print(f"You win with a score of {player.final_score} to the house's {house.final_score}")
-elif (player.final_score < house.final_score or house.win) and not (player.lost or house.lost):
-    print(f"House wins with a score of {house.final_score} to your {player.final_score}")        
-elif player.final_score == house.final_score and not (player.lost or house.lost):
-    print(f"You and the house are tied at {player.final_score} points each")
+
+def tie():
+    return (player.final_score == house.final_score) and not (player.lost or house.lost)
+
+
+def gameplay(card_list, house, player):
+    opening_deal()
+
+    while player.hit_available:
+        player.offer_hit(card_list)   
+
+    if not (player.win or player.lost):
+        house.house_behavior(player.final_score, card_list)
+
+    if player_win():
+        print(f"You win with a score of {player.final_score} to the house's {house.final_score}\n")
+    elif house_win():
+        print(f"House wins with a score of {house.final_score} to your {player.final_score}\n")        
+    elif tie():
+        print(f"You and the house are tied at {player.final_score} points each\n")
+
+while True:
+    for game in range(4):  # Plays 4 games before reshuffling
+        house = House()
+        player = Player()
+        print("=============================\n")
+        gameplay(card_list, house, player)
+        sleep(2)
+        
+    card_list = default_deck.copy()
+    shuffle(card_list)

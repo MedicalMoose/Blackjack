@@ -11,14 +11,14 @@ class Actor:
         self.name = ""
 
     def win_case(self):
-        print(f"{self.name} hit blackjack!")
+        print(f"{self.name} hit blackjack!\n")
         self.hit_available = False # Prevents drawing a card after win
         self.win = True
         self.display_hand()
 
 
     def loss_case(self):
-        print(f"{self.name} busted!")
+        print(f"{self.name} busted!\n")
         self.lost = True
         self.hit_available = False  # Prevents drawing a card after loss
 
