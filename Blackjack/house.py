@@ -13,13 +13,14 @@ class House(Actor):
         for i in range(2):
             self.cards_in_hand.append(card_list.pop())
         self.status_check()
-        print(f"{self.name}: {self.cards_in_hand[0]}, ???")
+        print(f"{self.name}: \t{self.cards_in_hand[0]}, ???")
 
 
     # Yes - this does count as us making an A.I.
     def house_behavior(self, player_score, card_list):
         self.display_hand()
         house_score = self.score.get_score()
+        self.status_check()
         while house_score < player_score and house_score < 17 and self.hit_available:
             sleep(1)
             self.hit(card_list)

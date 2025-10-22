@@ -8,7 +8,7 @@ class Player(Actor):
 
 
     def player_response(self):
-        response = input("Hit (h) or Stand (s)?").lower()
+        response = input("Hit (h) or Stand (s)? \n").lower()
         while response not in ["h", "s"]:
             response = input("Hit (h) or Stand (s)? \n").lower()
         return response

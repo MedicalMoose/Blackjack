@@ -10,6 +10,7 @@ from random import shuffle
 card_list = []
 suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
 rank_score = [["2", 2], ["3", 3], ["4", 4], ["5", 5], ["6", 6], ["7", 7], ["8", 8], ["9", 9], ["10", 10], ["Jack", 10], ["Queen", 10], ["King", 10], ["Ace", "Ace"], ]
+round_number = 1
 
 # Creating our cards
 for suit in suits:
@@ -27,15 +28,15 @@ def opening_deal():
     player.opening_draw(card_list)
 
 def player_win():
-    return (player.final_score > house.final_score) and not (player.lost or house.lost)
+    return (player.final_score > house.final_score) and not (player.win or house.lost)
 
 
 def house_win():
-    return (player.final_score < house.final_score) and not (player.lost or house.lost)
+    return (player.final_score < house.final_score) and not (player.lost or house.win or house.lost)
 
 
 def tie():
-    return (player.final_score == house.final_score) and not (player.lost or house.lost)
+    return (player.final_score == house.final_score) and not (player.lost or house.lost or player.win or house.win)
 
 
 def gameplay(card_list, house, player):
@@ -58,9 +59,12 @@ while True:
     for game in range(4):  # Plays 4 games before reshuffling
         house = House()
         player = Player()
-        print("=============================\n")
+        print("=============================")
+        print(f"           Round {round_number}      ")
+        print("=============================")
         gameplay(card_list, house, player)
         sleep(2)
+        round_number += 1
         
     card_list = default_deck.copy()
     shuffle(card_list)
