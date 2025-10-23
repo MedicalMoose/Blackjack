@@ -11,6 +11,8 @@ card_list = []
 suits = ["Clubs", "Diamonds", "Hearts", "Spades"]
 rank_score = [["2", 2], ["3", 3], ["4", 4], ["5", 5], ["6", 6], ["7", 7], ["8", 8], ["9", 9], ["10", 10], ["Jack", 10], ["Queen", 10], ["King", 10], ["Ace", "Ace"], ]
 round_number = 1
+house = House()
+player = Player()
 
 # Creating our cards
 for suit in suits:
@@ -39,6 +41,13 @@ def tie():
     return (player.final_score == house.final_score) and not (player.lost or house.lost or player.win or house.win)
 
 
+def win_tracker(player, house):
+    if player_win() or house.lost or player.win:
+        player.total_wins += 1
+    elif house_win() or player.lost or house.win:
+        house.total_wins += 1
+
+
 def gameplay(card_list, house, player):
     opening_deal()
 
@@ -55,15 +64,19 @@ def gameplay(card_list, house, player):
     elif tie():
         print(f"You and the house are tied at {player.final_score} points each\n")
 
+
 while True:
     for game in range(4):  # Plays 4 games before reshuffling
-        house = House()
-        player = Player()
+        house.reset()
+        player.reset()
         print("=============================")
-        print(f"           Round {round_number}      ")
+        print(f"\t    Round {round_number}")
+        print(f"Player: {player.total_wins}     |     House: {house.total_wins}")
+        print(f"\t    Ties: {round_number - 1 - (player.total_wins + house.total_wins)}")
         print("=============================")
         gameplay(card_list, house, player)
         sleep(2)
+        win_tracker(player, house)
         round_number += 1
         
     card_list = default_deck.copy()

@@ -9,6 +9,7 @@ class Actor:
         self.win = False
         self.lost = False
         self.name = ""
+        self.total_wins = 0
 
     def win_case(self):
         self.display_hand()
@@ -65,3 +66,12 @@ class Actor:
             # This is why we had the __str__ method in the Cards class
             print(card, end = "\n\t")  # end= " " makes it so all the cards are on the same line
         print()  # New line after printing cards, purely for aesthetics
+
+
+    def reset(self):
+        self.cards_in_hand = []
+        self.score = Scoring(self.cards_in_hand)
+        self.final_score = 0
+        self.hit_available = False
+        self.win = False
+        self.lost = False

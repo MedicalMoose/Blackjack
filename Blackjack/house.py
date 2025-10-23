@@ -12,7 +12,6 @@ class House(Actor):
     def opening_draw(self, card_list):
         for i in range(2):
             self.cards_in_hand.append(card_list.pop())
-        self.status_check()
         print(f"{self.name}: \t{self.cards_in_hand[0]}, ???")
 
 
