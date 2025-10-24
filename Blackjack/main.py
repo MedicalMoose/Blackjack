@@ -1,8 +1,6 @@
-from actor import Actor
 from cards import Cards
 from house import House
 from player import Player
-from scoring import Scoring
 from time import sleep
 from random import shuffle
 
@@ -65,19 +63,27 @@ def gameplay(card_list, house, player):
         print(f"You and the house are tied at {player.final_score} points each\n")
 
 
+def card_shuffling(card_list, default_deck):
+    if len(card_list) < 15:
+        card_list = default_deck.copy()
+        shuffle(card_list)
+        print("Reshuffling the deck...\n")
+        sleep(2.5)
+    return card_list
+
+
 while True:
-    for game in range(4):  # Plays 4 games before reshuffling
-        house.reset()
-        player.reset()
-        print("=============================")
-        print(f"\t    Round {round_number}")
-        print(f"Player: {player.total_wins}     |     House: {house.total_wins}")
-        print(f"\t    Ties: {round_number - 1 - (player.total_wins + house.total_wins)}")
-        print("=============================")
-        gameplay(card_list, house, player)
-        sleep(2)
-        win_tracker(player, house)
-        round_number += 1
+    house.reset()
+    player.reset()
+    print("=============================")
+    print(f"\t    Round {round_number}")
+    print(f"Player: {player.total_wins}     |     House: {house.total_wins}")
+    print(f"\t    Ties: {round_number - 1 - (player.total_wins + house.total_wins)}")
+    print("=============================")
+    gameplay(card_list, house, player)
+    sleep(2)
+    win_tracker(player, house)
+    round_number += 1
         
-    card_list = default_deck.copy()
-    shuffle(card_list)
+    card_list = card_shuffling(card_list, default_deck)
+    

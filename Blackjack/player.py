@@ -11,6 +11,7 @@ class Player(Actor):
         response = input("Hit (h) or Stand (s)? \n").lower()
         while response not in ["h", "s"]:
             response = input("Hit (h) or Stand (s)? \n").lower()
+        print("")  # Whitespace
         return response
 
 
