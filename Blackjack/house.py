@@ -9,9 +9,10 @@ class House(Actor):
 
     # We're using the skeleton of the method in the superclass, and tweaking it a bit.
     # POLYMORPHISM!
-    def opening_draw(self, card_list):
+    def opening_draw(self, cards, played):
         for i in range(2):
-            self.cards_in_hand.append(card_list.pop())
+            self.cards_in_hand.append(cards.pop())
+        played.append(self.cards_in_hand[0])
         print(f"{self.name}: \t{self.cards_in_hand[0]}, ???")
 
 
