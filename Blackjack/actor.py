@@ -27,9 +27,9 @@ class Actor:
 
     # Checks to see if the actor has won, lost, or can hit again
     def status_check(self):
-        if self.score.get_score() > 21:
+        if self.score.return_score() > 21:
             self.loss_case()
-        elif self.score.get_score() == 21:
+        elif self.score.return_score() == 21:
             self.win_case()
         else:
             self.hit_available = True
@@ -58,7 +58,7 @@ class Actor:
     # We're basically just saying "We're done! This is the hand I'm playing"
     def stand(self):
         self.hit_available = False
-        self.final_score = self.score.get_score()
+        self.final_score = self.score.return_score()
 
 
     # Prints off the cards the actor has in their hands

@@ -19,12 +19,12 @@ class House(Actor):
     # Yes - this does count as us making an A.I.
     def house_behavior(self, player_score, card_list):
         self.display_hand()
-        house_score = self.score.get_score()
+        house_score = self.score.return_score()
         self.status_check()
         while house_score < player_score and house_score < 17 and self.hit_available:
             sleep(1)
             self.hit(card_list)
-            house_score = self.score.get_score()
+            house_score = self.score.return_score()
         self.final_score = house_score
         if house_score >= player_score:
             self.stand()

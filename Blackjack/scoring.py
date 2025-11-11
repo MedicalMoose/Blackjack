@@ -14,7 +14,7 @@ class Scoring:
             return score + aces
 
 
-    def score_totalling(self, card):
+    def get_score(self, card):
         if card.score == "Ace":
             # We check if an ace is in hand and note its presence
             self.no_aces += 1
@@ -25,10 +25,10 @@ class Scoring:
 
     # Function that returns the score of the hand
     # e.g.: [Seven of Hearts, Jack of Spades] returns 17
-    def get_score(self):
+    def return_score(self):
         self.total_score = 0  # Resets score before counting again
         self.no_aces = 0
         for card in self.cards:
-            self.score_totalling(card)
+            self.get_score(card)
         # Returns the final code, considering the effect of aces
         return self.ace_handling(self.total_score, self.no_aces)
